@@ -46,11 +46,11 @@ static void wrapper_current_type() {
 
     struct stat st;
     if(stat("/dev/ttyACM0",&st) == 0){
-        LOGI("External GPS Present (/dev/ttyACM0)");
+        ALOGI("External GPS Present (/dev/ttyACM0)");
         current_type = 1;
         return;
     } else {
-        LOGI("No External GPS Found");
+        ALOGI("No External GPS Found");
         current_type = 0;
         return;
     }
@@ -61,20 +61,20 @@ static void current_device_check(){
     int old_type = current_type;
     wrapper_current_type();
 
-    LOGI("Check Current Device");
+    ALOGI("Check Current Device");
 
     if (old_type == current_type){
-        LOGV("No Device Switch Needed");
+        ALOGV("No Device Switch Needed");
         return;
     }
 
     if (current_type == 0){
-        LOGV("Switch External -> Internal");
+        ALOGV("Switch External -> Internal");
         interface_external->cleanup();
         interface_internal->init(device_callbacks);
                 
     } else if (current_type == 1) {
-        LOGV("Switch Internal -> External");
+        ALOGV("Switch Internal -> External");
         interface_internal->cleanup();
         interface_external->init(device_callbacks);
     }
@@ -88,10 +88,10 @@ static int wrapper_init(GpsCallbacks* callbacks) {
     device_callbacks = callbacks;
 
     if (current_type ==0) {
-        LOGI("Wrapper init (internalGPS)");
+        ALOGI("Wrapper init (internalGPS)");
         interface_internal->init(callbacks);
     } else {
-        LOGI("Wrapper init (externalGPS)");
+        ALOGI("Wrapper init (externalGPS)");
         interface_external->init(callbacks);
     }
 
@@ -99,7 +99,7 @@ static int wrapper_init(GpsCallbacks* callbacks) {
 }
 
 static int wrapper_start() {
-    LOGV("Wrapper start");
+    ALOGV("Wrapper start");
 
     current_device_check();
 
@@ -112,7 +112,7 @@ static int wrapper_start() {
 }
 
 static int wrapper_stop() {
-    LOGV("Wrapper stop");
+    ALOGV("Wrapper stop");
 
     if (current_type ==0)
         interface_internal->stop();
@@ -125,7 +125,7 @@ static int wrapper_stop() {
 }
 
 static void wrapper_cleanup() {
-    LOGV("Wrapper cleanup");
+    ALOGV("Wrapper cleanup");
 
     if (current_type ==0)
         interface_internal->cleanup(); 
@@ -135,7 +135,7 @@ static void wrapper_cleanup() {
 
 static int wrapper_inject_time(GpsUtcTime time, int64_t timeReference,
                          int uncertainty) {
-    LOGV("Wrapper inject time");
+    ALOGV("Wrapper inject time");
 
     if (current_type ==0)
         interface_internal->inject_time(time, timeReference, uncertainty);
@@ -146,7 +146,7 @@ static int wrapper_inject_time(GpsUtcTime time, int64_t timeReference,
 }
 
 static int wrapper_inject_location(double latitude, double longitude, float accuracy) {
-    LOGV("Wrapper inject location");
+    ALOGV("Wrapper inject location");
 
     if (current_type ==0)
         interface_internal->inject_location(latitude, longitude, accuracy);
@@ -157,7 +157,7 @@ static int wrapper_inject_location(double latitude, double longitude, float accu
 }
 
 static void wrapper_delete_aiding_data(GpsAidingData flags) {
-    LOGV("Wrapper delete aiding data");
+    ALOGV("Wrapper delete aiding data");
 
     if (current_type ==0)
         interface_internal->delete_aiding_data(flags);
@@ -167,7 +167,7 @@ static void wrapper_delete_aiding_data(GpsAidingData flags) {
 
 static int wrapper_set_position_mode(GpsPositionMode mode, GpsPositionRecurrence recurrence,
 uint32_t min_interval, uint32_t preferred_accuracy, uint32_t preferred_time) {
-    LOGV("Wrapper set position mode");
+    ALOGV("Wrapper set position mode");
 
     if (current_type ==0)
         interface_internal->set_position_mode(mode, recurrence, min_interval, preferred_accuracy,
@@ -179,7 +179,7 @@ return 0;
 }
 
 static const void* wrapper_get_extension(const char* name) {
-    LOGV("Wrapper get extension");
+    ALOGV("Wrapper get extension");
 
     if (current_type ==0)
         interface_internal->get_extension(name);
@@ -219,28 +219,28 @@ static int open_wrapper(const struct hw_module_t* module, char const* name,
     struct gps_device_t* gps_device_external;
     struct gps_device_t* gps_device_wrapper;
 
-    LOGI("TF201 GPS Wrapper Open");
+    ALOGI("TF201 GPS Wrapper Open");
 
     wrapper_current_type();
 
     module_internal = dlopen("/system/lib/hw/gpsinternal.tegra.so", RTLD_NOW);
     if (module_internal == NULL) {
-        LOGE("error loading module");
+        ALOGE("error loading module");
         status -1;
     }
 
     const char *sym = HAL_MODULE_INFO_SYM_AS_STR;
     hw_module_internal = (struct hw_module_t *)dlsym(module_internal, sym);
     if (hw_module_internal == NULL) {
-        LOGE("couldn't find symbol %s", sym);
+        ALOGE("couldn't find symbol %s", sym);
         status = -1;
     }
 
     if (status == 0 ){
-        LOGI("loading internal GPS HAL name=%s id=%s", hw_module_internal->name, hw_module_internal->id);
+        ALOGI("loading internal GPS HAL name=%s id=%s", hw_module_internal->name, hw_module_internal->id);
         hw_module_internal->methods->open(hw_module_internal, GPS_HARDWARE_MODULE_ID, &dev_internal);
     } else {
-        LOGE("Error loading internal GPS HAL");
+        ALOGE("Error loading internal GPS HAL");
         module_internal = NULL;
     }
 
@@ -252,21 +252,21 @@ static int open_wrapper(const struct hw_module_t* module, char const* name,
     module_external = dlopen("/system/lib/hw/gpsdongle.tegra.so", RTLD_NOW);
     if (module_external == NULL) {
         char const *err_str = dlerror();
-        LOGE("error loading module");
+        ALOGE("error loading module");
         status -1;
     }
 
     hw_module_external = (struct hw_module_t *)dlsym(module_external, sym);
     if (hw_module_external == NULL) {
-        LOGE("couldn't find symbol %s", sym);
+        ALOGE("couldn't find symbol %s", sym);
         status = -1;
     }
 
     if (status == 0 ){
-        LOGI("loading external GPS HAL name=%s id=%s", hw_module_external->name, hw_module_external->id);
+        ALOGI("loading external GPS HAL name=%s id=%s", hw_module_external->name, hw_module_external->id);
         hw_module_external->methods->open(hw_module_external, GPS_HARDWARE_MODULE_ID, &dev_external);
     } else {
-        LOGE("Error loading external GPS HAL");
+        ALOGE("Error loading external GPS HAL");
         module_external = NULL;
     }
 
@@ -286,7 +286,7 @@ static int open_wrapper(const struct hw_module_t* module, char const* name,
         *device = (struct hw_device_t*)gps_device_wrapper;
 
     } else {
-        LOGE("Error loading tf201 GPS wrapper");
+        ALOGE("Error loading tf201 GPS wrapper");
     }
 
     return status;
