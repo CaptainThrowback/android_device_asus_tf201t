@@ -296,7 +296,7 @@ static struct hw_module_methods_t gps_module_methods = {
     .open = open_wrapper
 };
 
-const struct hw_module_t HAL_MODULE_INFO_SYM = {
+struct hw_module_t HAL_MODULE_INFO_SYM = {
     .tag = HARDWARE_MODULE_TAG,
     .version_major = 0,
     .version_minor = 2,
