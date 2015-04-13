@@ -42,6 +42,3 @@ TARGET_KERNEL_CONFIG := grimlock_tegra3_defconfig
 # Specific 201 wifi defines
 WIFI_DRIVER_FW_PATH_STA     := "/system/vendor/firmware/bcm4329/fw_bcmdhd.bin"
 WIFI_DRIVER_FW_PATH_AP      := "/system/vendor/firmware/bcm4329/fw_bcmdhd_apsta.bin"
-
-#TWRP
-TW_THEME := landscape_mdpi
