@@ -24,7 +24,7 @@
 TARGET_NO_RADIOIMAGE := true
 TARGET_BOOTLOADER_BOARD_NAME := cardhu
 TARGET_NO_BOOTLOADER := true
-TARGET_BOARD_PLATFORM := tegra
+TARGET_BOARD_PLATFORM := tegra
 TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
 TARGET_CPU_SMP := true
@@ -40,5 +40,6 @@ TARGET_KERNEL_SOURCE := kernel/asus/tegra3/grimlocks
 TARGET_KERNEL_CONFIG := grimlock_tegra3_defconfig
 
 # Specific 201 wifi defines
+WIFI_DRIVER_FW_PATH_PARAM   := "/sys/module/bcmdhd/parameters/firmware_path"
 WIFI_DRIVER_FW_PATH_STA     := "/system/vendor/firmware/bcm4329/fw_bcmdhd.bin"
 WIFI_DRIVER_FW_PATH_AP      := "/system/vendor/firmware/bcm4329/fw_bcmdhd_apsta.bin"
