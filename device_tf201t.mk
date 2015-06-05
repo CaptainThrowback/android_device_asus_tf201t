@@ -12,6 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Files needed for boot image
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/ramdisk/init.cardhu.rc:root/init.cardhu.rc
+
 $(call inherit-product-if-exists, vendor/asus/tf201t/tf201t-vendor.mk)
 
 $(call inherit-product-if-exists, device/asus/transformer-common/transformer-common.mk)
