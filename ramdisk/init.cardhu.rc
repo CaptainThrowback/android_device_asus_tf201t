@@ -317,26 +317,6 @@ service iprenew_bt-pan /system/bin/dhcpcd -n
     oneshot
 #Sensor load calibration files end
 
-# virtual sdcard daemon running as media_rw (1023)
-service sdcard /system/bin/sdcard -u 1023 -g 1023 -t 4 -l /data/media /mnt/shell/emulated
-    class late_start
-
-service fuse_sdcard1 /system/bin/sdcard -u 1023 -g 1023 -t 4 -d /mnt/media_rw/sdcard1 /storage/sdcard1
-    class late_start
-    disabled
-
-service fuse_sdcard2 /system/bin/sdcard -u 1023 -g 1023 -t 4 -d /mnt/media_rw/sdcard2 /storage/sdcard2
-    class late_start
-    disabled
-
-service fuse_usbdisk0 /system/bin/sdcard -u 1023 -g 1023 -t 4 -d /mnt/media_rw/usbdisk0 /storage/usbdisk0
-    class late_start
-    disabled
-
-service fuse_usbdisk1 /system/bin/sdcard -u 1023 -g 1023 -t 4 -d /mnt/media_rw/usbdisk1 /storage/usbdisk1
-    class late_start
-    disabled
-
 # bdaddrwriter - Write ASUS BD_ADDR to /data/misc/bluetooth
 service bdaddrwriter /system/bin/bdaddrwriter
     class main
