@@ -36,7 +36,7 @@ ARCH_ARM_HAVE_32_BYTE_CACHE_LINES := true
 ARCH_ARM_USE_NON_NEON_MEMCPY := true
 
 # Build the kernel inline
-TARGET_KERNEL_SOURCE := kernel/asus/tegra3/grimlocks
+TARGET_KERNEL_SOURCE := kernel/asus/tegra3/unified/
 TARGET_KERNEL_CONFIG := grimlock_tegra3_defconfig
 
 # Specific 201 wifi defines
