@@ -36,8 +36,11 @@ ARCH_ARM_HAVE_32_BYTE_CACHE_LINES := true
 ARCH_ARM_USE_NON_NEON_MEMCPY := true
 
 # Build the kernel inline
-TARGET_KERNEL_SOURCE := kernel/asus/tegra3/unified/grimlock
-TARGET_KERNEL_CONFIG := grimlock_tegra3_defconfig
+#TARGET_KERNEL_SOURCE := kernel/asus/tegra3/unified/grimlock
+#TARGET_KERNEL_CONFIG := grimlock_tegra3_defconfig
+
+# Use prebuilt kernel
+TARGET_PREBUILT_KERNEL := device/asus/tf201t/prebuilt/kernel
 
 # Specific 201 wifi defines
 WIFI_DRIVER_FW_PATH_PARAM   := "/sys/module/bcmdhd/parameters/firmware_path"

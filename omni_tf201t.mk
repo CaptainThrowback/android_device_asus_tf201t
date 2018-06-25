@@ -15,8 +15,8 @@
 # Inherit from those products. Most specific first.
 $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base.mk)
 
-# Inherit from our custom product configuration
-$(call inherit-product, vendor/zombi/config/common_tablet.mk)
+# Inherit from Omni product configuration
+$(call inherit-product, vendor/omni/config/common_tablet.mk)
 
 # Inherit from those products. Most specific first.
 
@@ -27,7 +27,7 @@ PRODUCT_AAPT_CONFIG := normal mdpi hdpi xhdpi
 PRODUCT_AAPT_PREF_CONFIG := mdpi
 
 # Discard inherited values and use our own instead.
-PRODUCT_NAME := zombi_tf201t
+PRODUCT_NAME := omni_tf201t
 PRODUCT_DEVICE := tf201t
 PRODUCT_BRAND := Asus
 PRODUCT_MODEL := TF201T

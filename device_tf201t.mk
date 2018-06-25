@@ -16,6 +16,6 @@
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/ramdisk/init.cardhu.rc:root/init.cardhu.rc
 
-$(call inherit-product, vendor/asus/tf201t/tf201t-vendor.mk)
+$(call inherit-product-if-exists, vendor/asus/tf201t/tf201t-vendor.mk)
 
 $(call inherit-product, device/asus/transformer-common/transformer-common.mk)

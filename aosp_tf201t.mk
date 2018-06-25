@@ -13,4 +13,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-$(call inherit-product, device/asus/grouper/full_tf201t.mk)
+$(call inherit-product, device/asus/tf201t/full_tf201t.mk)

@@ -1,1 +1,3 @@
-PRODUCT_MAKEFILES := $(LOCAL_DIR)/zombi_tf201t.mk
+PRODUCT_MAKEFILES := \
+    $(LOCAL_DIR)/omni_tf201t.mk \
+    $(LOCAL_DIR)/full_tf201t.mk
